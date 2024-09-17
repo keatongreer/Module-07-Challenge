@@ -54,13 +54,47 @@ const questions = [
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
+    const formattedReadme = `# ${data.title}
     
+## Description
+${data.description}
+
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- [License](#license)
+- [Contributing](#contributing)
+- [Tests](#tests)
+- [Questions](#questions)
+
+## Installation
+${data.install}
+
+## Usage
+${data.usage}
+
+## License
+This project is covered under the following license: ${data.license}
+
+## Contributing
+${data.contribute}
+
+## Tests
+${data.tests}
+
+## Questions
+${data.username}
+Contact me at ${data.email} with any questions`;
+
+    fs.writeFile(fileName, formattedReadme, (err) => {
+        err ? console.error(err) : console.log('README.md Created');
+    });
 }
 
 // TODO: Create a function to initialize app
 function init() {
     inquirer.prompt(questions)
-    .then((response) =>
+    .then((response) => 
         writeToFile('README.md', response)
     );
 }
