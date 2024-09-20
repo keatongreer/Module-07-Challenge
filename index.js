@@ -38,7 +38,7 @@ const questions = [
         type: 'list',
         message: 'What license is this project using? ',
         name: 'license',
-        choices: ['None', 'Apache License 2.0', 'GNU General Public License v3.0', 'MIT License', 'Creative Commons Zero v1.0 Universal', 'Mozilla Public License 2.0', 'The Unlicense']
+        choices: ['Apache License 2.0', 'GNU General Public License v3.0', 'MIT License', 'Creative Commons Zero v1.0 Universal', 'Mozilla Public License 2.0', 'The Unlicense']
     },
     {
         type: 'input',
@@ -54,8 +54,29 @@ const questions = [
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
+    // get license badge markdown
+    let licenseMarkdown = '';
+    console.log(data.license);
+
+    if (data.license === 'Apache License 2.0') {
+        licenseMarkdown = '[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)';
+    } else if (data.license === 'GNU General Public License v3.0') {
+        licenseMarkdown = '[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)';
+    } else if (data.license === 'MIT License') {
+        licenseMarkdown = '[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)';
+    } else if (data.license === 'Creative Commons Zero v1.0 Universal') {
+        licenseMarkdown = '[![License: CC0-1.0](https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/)';
+    } else if (data.license === 'Mozilla Public License 2.0') {
+        licenseMarkdown = '[![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)';
+    } else if (data.license === 'The Unlicense') {
+        licenseMarkdown = '[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)';
+    }
+
+    // build formatted readme markdown from user inputs
     const formattedReadme = `# ${data.title}
     
+${licenseMarkdown}
+
 ## Description
 ${data.description}
 
@@ -84,6 +105,7 @@ ${data.tests}
 
 ## Questions
 ${data.username}
+
 Contact me at ${data.email} with any questions`;
 
     fs.writeFile(fileName, formattedReadme, (err) => {
